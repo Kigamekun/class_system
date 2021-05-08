@@ -7,6 +7,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>
   KigaClass
   </title>
@@ -538,6 +539,40 @@ input[type="checkbox"]:checked:after {
 function answer(tugas_id) {
   $('#tugas').val(tugas_id); 
 }
+
+</script>
+
+      
+<script>
+$('#upload').submit(function(e) {
+  console.log('masuk ajax');
+e.preventDefault();
+// var formData = new FormData(this);
+    $.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+    
+      $.ajax({ 
+        url: '/create_task/',
+        type: 'POST',
+        data:new FormData(this),
+   dataType:'JSON',
+   contentType: false,
+   cache: false,
+   processData: false,
+      
+        success: function () {
+              document.getElementById('alert').style.display = "block";
+              $('#upload').reset();
+              location.reload();             
+        }
+        });
+    
+
+    });
+
 
 </script>
 

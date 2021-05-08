@@ -212,7 +212,6 @@ class StudentController extends Controller
     }
     public function create_task(Request $request)
     {
-        // dd($request->judul);
         $this->validate($request,[
             'judul'=>'required',
             'kelas'=> 'required',
@@ -236,8 +235,8 @@ class StudentController extends Controller
             'file'=>$nama_file,
             'deadline'=>$solve
         ]);
-
-        return redirect()->back()->with('status', 'your message,here');
+        return response()->json(['success'=>'Article added successfully']);
+        // return redirect()->back()->with('status', 'your message,here');
             
     }
     public function answer_task(Request $request)
@@ -311,6 +310,19 @@ else {
     }
 }
 
+public function create_student(Request $request)
+{
+    // dd($request->kelas );
+        $id = Auth::id();
+        student::create([
+            'user_id'=>$id,
+            'nama'=>$request->nama,
+             'kelas'=>$request->kelas
+        ]);
+
+        return redirect('home')->with('status','no such file for this task');
+}
+
 public function coba(Request $request)
 {
     $phone = teacher::find(1)->user;
@@ -318,6 +330,8 @@ public function coba(Request $request)
     
 }
 
+
+      
 
 
 }

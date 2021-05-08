@@ -62,13 +62,12 @@
                           $finish = \App\Models\answer_task::where(['tugas_id' => $tsk->id])->get()->count();
                           $all = \App\Models\Student::where(['kelas' => $kelas])->get()->count();
                           $progress = $finish/$all * 100;
+                          $progress = intval($progress);
                           echo '<span class="mr-2">'.$progress.'%</span>';
                       @endphp
                         
                         <div>
                           <div class="progress">
-
-
                             @php
                           $finish = \App\Models\answer_task::where(['tugas_id' => $tsk->id])->get()->count();
                           $all = \App\Models\Student::where(['kelas' => $kelas])->get()->count();
@@ -118,15 +117,24 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">Post Task !</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form action="/create_task" method="POST" enctype="multipart/form-data">
-              @csrf
-              <div class="modal-body">
+            
+            <form method="POST" enctype="multipart/form-data" id="upload">
 
+              @csrf
+              <div class="modal-body" >
+                <div id="alert" style="display: none;" class="alert alert-info alert-dismissible fade show" role="alert">
+                  <strong>Success</strong> You should check in on some of those fields below.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                
+                
             <input type="hidden" name="kelas" value="{{$kelas}}">
             <input type="hidden" name="course" value="{{$course}}">
            
@@ -145,35 +153,17 @@
                                   <label for="tanggal">Your Deadline</label>
                                   <div class="input-group mb-3">
                                     
-                                    <input id="tanggal" name="tanggal" placeholder="Tanggal Keberangkatan *" data-provide="datepicker" data-date-autoclose="true" class="form-control">
+                                    <input id="tanggal" name="tanggal" placeholder="Deadline " data-provide="datepicker" data-date-autoclose="true" class="form-control">
                                 </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" >Save changes</button>
+              <button type="submit"  class="btn btn-primary" >Save changes</button>
             </div>
           </form>
           </div>
         </div>
       </div>
 
-      
-{{-- <script>
-  function post_data(data_id) {
-    
-    
-      $.ajax({ 
-        url: '/post_data/',
-        type: 'GET',
 
-
-        data: {"item_id": data_id,},
-        success: console.log('berhasil');
-        });
-    
-
-    };
-
-
-</script> --}}
 @endsection

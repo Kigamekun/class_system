@@ -1,5 +1,3 @@
-
-
 <!--
 
 =========================================================
@@ -45,8 +43,8 @@
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
-              <h1 class="text-white">Register</h1>
-              
+              <h1 class="text-white">Add your Data!</h1>
+              <p class="text-lead text-light"></p>
             </div>
           </div>
         </div>
@@ -69,73 +67,32 @@
             </div>
             <div class="card-body px-lg-5 py-lg-5">
               
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
-
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1">Nama</span>
-                        </div>
-                        
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    
-
-
-                      </div>
-
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1">E-Mail</span>
-                        </div>
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-               
-                      </div>
-
-
-                      
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1">Pass</span>
-                        </div>
-                       
-
-
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                      
-                      </div>
-
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1">Re Enter Pass</span>
-                        </div>
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                      </div>
-
-
-                   
-                   
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Register') }}
-                            </button>
-                        </div>
+              <form role="form" method="POST" action="/create_student">
+              @csrf
+                <div class="form-group">
+                  <div class="input-group input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                     </div>
-                </form>
+                    <input class="form-control" placeholder="Name" type="text" name="nama">
+                  </div>
+                </div>
+                <div class="form-group">
+      <label for="inputState">Kelas</label>
+      <select name="kelas" id="inputState" class="form-control">
+        <option selected>Choose...</option>
+          @foreach (\App\Models\classes::all() as $cls)
+        <option  value="{{$cls->id}}">{{$cls->kelas}}</option>
+         @endforeach
+      </select>
+    </div>
+              
+                
+               
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary mt-4">Create account</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -162,5 +119,3 @@
 </body>
 
 </html>
-
-
