@@ -102,7 +102,8 @@
                 <hr class="my-4" />
                 <!-- Address -->
                 <h6 class="heading-small text-muted mb-4">Contact information</h6>
-                <div class="pl-lg-4">
+                <div style="display: flex;width:100%;">
+                <div class="pl-lg-4" style="flex: 2;">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -132,6 +133,31 @@
                     </div>
                   </div>
                 </div>
+                
+                <div style="flex: 1;">
+                  <center>
+                  <div style="border-radius:20px;box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);width: 230px;">
+                    <h1><b>ABSENSI</b></h1>
+                
+                <div style="width: 230px; display:flex; flex-wrap: wrap;">
+                    @for ($i = 1; $i < $hari+1; $i++)
+                    @if (is_null(\App\Models\absen::where(['user_id' => $user->id])->where(['tanggal'=>$tahun.'-'.$bulan.'-'.$i])->first()))
+                    <div title="{{$i.'-'.$bulan.'-'.$tahun}}" style="height: 40px;width:40px !important;margin:2px;" class="btn btn-danger"></div>
+                    @else
+                    <div title="{{$i.'-'.$bulan.'-'.$tahun}}" style="height: 40px;width:40px !important;margin:2px;" class="btn btn-success"></div>
+                        
+                    @endif
+                    
+                    @endfor
+                </div>
+                <hr>
+                
+                <button style="margin-bottom: 10px;" class="btn btn-info">Absen!</button>
+                </div>
+              </center>
+                
+                </div>
+              </div>
                 <hr class="my-4" />
                 <!-- Description -->
                 <h6 class="heading-small text-muted mb-4">About me</h6>

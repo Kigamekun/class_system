@@ -13,7 +13,11 @@ use App\Models\answer_task;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Response;
+use Illuminate\Support\Facades\Storage;
 use Exception;
+use File;
+use ZipArchive;
+
 class StudentController extends Controller
 {
     /**
@@ -97,6 +101,10 @@ class StudentController extends Controller
     
     public function profile(Request $request)
     {
+        $sekarang = date('d-m-Y');
+        $user = Auth::id();
+        $sekarang = explode('-',$sekarang);
+        $hari = cal_days_in_month(CAL_GREGORIAN,$sekarang[1],$sekarang[2]);
         
         try{
             $id = Auth::id();
@@ -106,9 +114,9 @@ class StudentController extends Controller
                     $str = explode(',',$profile->specialist);
                     $str2 = explode(',',$profile->teach);
                     
-                    return view('profile',['profile'=>$profile,'user'=>$user,'course'=>$str,'class'=>$str2]);
+                    return view('profile',['profile'=>$profile,'user'=>$user,'course'=>$str,'class'=>$str2,'hari'=>$hari,'bulan'=>$sekarang[1],'tahun'=>$sekarang[2]]);
                 }
-                return view('profile',['profile'=>$profile,'user'=>$user]);
+                return view('profile',['profile'=>$profile,'user'=>$user,'hari'=>$hari,'bulan'=>$sekarang[1],'tahun'=>$sekarang[2]]);
             }
             else {
                 return view('profilenull');
@@ -329,9 +337,42 @@ public function coba(Request $request)
     dd($phone);
     
 }
+public function download_zip($def)
 
+{
+    unlink(public_path().'/'.'file.zip');
+    fopen(public_path().'/'.'file.zip', "x");
+    
+    $solve = [];
+    foreach (answer_task::where('tugas_id',$def)->get() as $isi ) {
+        $solve[] = $isi->file;
+    }
+   $zip = new ZipArchive();
+   $filename = 'file.zip';
+   if($zip->open(public_path($filename),ZipArchive::CREATE == TRUE)){
+       $file = File::files(public_path('answer'));
+       foreach($file as $key => $value ){
+           $namafile = explode('/',$value);
+           if(in_array($namafile[count($namafile)-1],$solve)){
+            //    echo "ini valuenya lho".$value.'<br>';
+               $relativeName = basename($value);
+               $zip->addFile($value,$relativeName);
 
-      
-
+           }
+       }
+       $zip->close();
+   }
+   return response()->download(public_path($filename));
 
 }
+
+public function absen(Request $request)
+{
+    $sekarang = date('d-m-Y');
+    $user = Auth::id();
+    $sekarang = explode('-',$sekarang);
+    $hari = cal_days_in_month(CAL_GREGORIAN,$sekarang[1],$sekarang[2]);
+    return view('absen',['hari'=>$hari,'bulan'=>$sekarang[1],'tahun'=>$sekarang[2],'user'=>$user]);
+}
+
+}   

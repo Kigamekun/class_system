@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\teacher;
 use App\Models\admin;
+use App\Models\User;
+use Exception;
 class check_student_register
 {
     /**
@@ -18,9 +20,16 @@ class check_student_register
      */
     public function handle(Request $request, Closure $next)
     {
+        try{
+            $id = Auth::id();
+            $user = User::where('id',$id)->first();
+            if (is_null($user)){
+                throw new Exception("Error Processing Request", 1);
+                
+            }
+        
 
-        $id = Auth::id();
-
+        
         if (is_null(admin::where('user_id',$id)->first())) {
                 
 
@@ -45,6 +54,8 @@ class check_student_register
 
     }
         
-        
+        }catch(Exception $e){
+            return redirect('/login');
+        }
     }
 }

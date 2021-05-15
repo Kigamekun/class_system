@@ -30,6 +30,8 @@ Route::get('/task/{classes}/{course}', [StudentController::class, 'task'])->name
 Route::get('/teachers_data', [StudentController::class, 'teachers_data'])->name('teachers_data')->middleware('check_student_register');
 Route::post('/create_task', [StudentController::class, 'create_task'])->name('create_task');
 Route::get('/download/{file}/{def}', [StudentController::class, 'download'])->name('download')->middleware('check_student_register');
+Route::get('/download_zip/{def}', [StudentController::class, 'download_zip'])->name('download_zip')->middleware('check_student_register');
+
 
 Route::get('/class_data/{classes}', [StudentController::class, 'class_fill'])->name('class_fill')->middleware('check_student_register');
 Route::get('/class_data', [StudentController::class, 'class_data'])->name('class_data')->middleware('check_student_register');
@@ -48,3 +50,6 @@ Route::post('/create_student', [StudentController::class, 'create_student'])->na
 Route::get('/register_student', function () {
     return view('register_student');
 });
+
+
+Route::get('/absen',[StudentController::class,'absen']);

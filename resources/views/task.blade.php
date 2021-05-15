@@ -17,9 +17,9 @@
                     <th scope="col">Judul</th>
                   
                     <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">See</th>
+                    <th scope="col">Download</th>
                     <th scope="col">Completion</th>
-                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -54,6 +54,9 @@
                       <a href="/lihat_tugas/{{$tsk->id}}" class="btn btn-success">lihat tugas </a>
                     </td>
                     <td>
+                      <a href="/download_zip/{{$tsk->id}}" class="btn btn-info">Download zip </a>
+                    </td>
+                    <td>
 
                       
 
@@ -80,18 +83,7 @@
                         </div>
                       </div>
                     </td>
-                    <td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-                    </td>
+                    
                   </tr>
                   @endforeach
                 </tbody>

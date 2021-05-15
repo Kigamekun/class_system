@@ -28,54 +28,6 @@
 
 
 </head>
-<style>
-
-input[type="checkbox"] {
-	float: left;
-	width: 42px;
-	height: 17px;
-	cursor: pointer;
-	background-color: rgb(170 170 170 / 30%);
-	-webkit-appearance: none;
-	border-radius: 8px;
-	position: relative;
-}
-
-input[type="checkbox"]:before {
-	content: "";
-	width: 21px;
-	height: 21px;
-	background-color: #F5F5F5;
-	border-radius: 50%;
-	position: absolute;
-	top: -2px;
-	z-index: 2;
-	left: -2px;
-	transition: all .2s linear;
-}
-
-input[type="checkbox"]:after {
-	content: "";
-	height: 100%;
-	width: 17px;
-	position: absolute;
-	left: 0;
-	z-index: 1;
-	border-radius: 17px;
-	background-color: rgb(51 174 184 / 30%);
-	transition: all .2s linear;
-}
-
-input[type="checkbox"]:checked:before {
-	left: calc(100% - 19px);
-	background-color: #33AEB8;
-}
-
-input[type="checkbox"]:checked:after {
-	width: 100%;
-	border-radius: 8px;
-}
-</style>
 
 <body class="">
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
@@ -114,22 +66,7 @@ input[type="checkbox"]:checked:after {
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Welcome!</h6>
             </div>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-single-02"></i>
-              <span>My profile</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-support-16"></i>
-              <span>Support</span>
-            </a>
+           
             <div class="dropdown-divider"></div>
             <a href="{{ route('logout') }}" onclick="event.preventDefault();
             document.getElementById('logout-form').submit(); class="dropdown-item">
@@ -233,7 +170,7 @@ input[type="checkbox"]:checked:after {
         @if(session()->get('role') == 1)
         <li class="nav-item">
             <a class="nav-link" href="{{ route('learning') }}">
-                <i class="ni ni-circle-08 text-pink"></i> Class
+                <i class="ni ni-books text-blue"></i> Class
               </a>
               
             </li>
@@ -261,7 +198,7 @@ input[type="checkbox"]:checked:after {
             @else 
             <li class="nav-item">
               <a class="nav-link" href="{{ route('task_view') }}">
-                <i class="ni ni-circle-08 text-pink"></i> task view
+                <i class="ni ni-book-bookmark text-blue"></i> task view
               </a>
               
             </li>
@@ -337,22 +274,7 @@ input[type="checkbox"]:checked:after {
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Welcome!</h6>
               </div>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-single-02"></i>
-                <span>My profile</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>Support</span>
-              </a>
+  
               <div class="dropdown-divider"></div>
               <a href="{{ route('logout') }}" onclick="event.preventDefault();
               document.getElementById('logout-form').submit();" class="dropdown-item">

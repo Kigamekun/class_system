@@ -14,9 +14,9 @@
         <table class="table align-items-center table-dark table-flush">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">Project</th>
-              <th scope="col">Budget</th>
-              <th scope="col">Status</th>
+              <th scope="col">Username</th>
+              <th scope="col">Role</th>
+              <th scope="col">E-mail</th>
               <th scope="col">Users</th>
               <th scope="col">Completion</th>
               <th scope="col"></th>
@@ -37,7 +37,15 @@
               </div>
           </th>
           <td>
-                $2,500 USD
+               @if ($std->role == 2)
+                   
+
+            <span class="badge badge-pill badge-primary">Admin</span>
+            @elseif( $std->role == 1)
+            <span class="badge badge-pill badge-success">Guru</span>
+            @else 
+            <span class="badge badge-pill badge-warning">murid</span>
+               @endif
               </td>
               <td>
                   <span class="badge badge-dot mr-4">
