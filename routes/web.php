@@ -53,3 +53,5 @@ Route::get('/register_student', function () {
 
 
 Route::get('/absen',[StudentController::class,'absen']);
+
+Route::post('/absent',[StudentController::class,'absent'])->name('absent');

@@ -8,6 +8,7 @@ use App\Models\teacher;
 use App\Models\User;
 use App\Models\classes;
 use App\Models\course;
+use App\Models\absen;
 use App\Models\task;
 use App\Models\answer_task;
 use Illuminate\Http\Request;
@@ -20,84 +21,7 @@ use ZipArchive;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return Inertia::render('app');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Student $student)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Student $student)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Student $student)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Student $student)
-    {
-        //
-    }
-
-
-
+   
     
     public function profile(Request $request)
     {
@@ -166,7 +90,7 @@ class StudentController extends Controller
             // dd($task);
             return view('task',['task'=>$task,'kelas'=>$classes->id,'course'=>$course->id]);
         }catch(Exception $e){
-
+                echo "mengalami error ".$e;
         }
     }
     public function teachers_data(Request $request)
@@ -374,5 +298,15 @@ public function absen(Request $request)
     $hari = cal_days_in_month(CAL_GREGORIAN,$sekarang[1],$sekarang[2]);
     return view('absen',['hari'=>$hari,'bulan'=>$sekarang[1],'tahun'=>$sekarang[2],'user'=>$user]);
 }
+
+
+public function absent(Request $request)
+{
+    $date = date('Y-m-d');
+    $user = Auth::id();
+    // dd($user);
+    absen::create(['user_id'=>$user,'tanggal'=>$date]);
+    return redirect()->back()->with('success','you has been absen');
+} 
 
 }   

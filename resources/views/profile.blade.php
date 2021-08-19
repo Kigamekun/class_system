@@ -75,12 +75,12 @@
                   <h3 class="mb-0">My account</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <form>
+             
                 <h6 class="heading-small text-muted mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -151,9 +151,18 @@
                     @endfor
                 </div>
                 <hr>
+     @if ( \App\Models\absen::where('user_id',Auth::id())->where('tanggal',date('Y-m-d'))->exists())
+
+     <button style="margin-bottom: 10px;" class="btn btn-success">Okay!</button>
+         @else 
                 
-                <button style="margin-bottom: 10px;" class="btn btn-info">Absen!</button>
-                </div>
+<form action="{{ route('absent') }}" method="POST">
+  @csrf
+
+                <button type="submit" style="margin-bottom: 10px;" class="btn btn-info">Absen!</button>
+              </form>  
+     @endif
+              </div>
               </center>
                 
                 </div>
@@ -167,9 +176,11 @@
                     <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
                   </div>
                 </div>
-              </form>
+              
             </div>
           </div>
         </div>
       </div>
+
+   
 @endsection
