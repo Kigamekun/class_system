@@ -21,15 +21,15 @@ use ZipArchive;
 
 class StudentController extends Controller
 {
-   
-    
+
+
     public function profile(Request $request)
     {
         $sekarang = date('d-m-Y');
         $user = Auth::id();
         $sekarang = explode('-',$sekarang);
         $hari = cal_days_in_month(CAL_GREGORIAN,$sekarang[1],$sekarang[2]);
-        
+
         try{
             $id = Auth::id();
             if ($profile = teacher::where('user_id',$id)->first() or $profile = student::where('user_id',$id)->first() or $profile = admin::where('user_id',$id)->first()) {
@@ -37,7 +37,7 @@ class StudentController extends Controller
                 if($user->role == 1){
                     $str = explode(',',$profile->specialist);
                     $str2 = explode(',',$profile->teach);
-                    
+
                     return view('profile',['profile'=>$profile,'user'=>$user,'course'=>$str,'class'=>$str2,'hari'=>$hari,'bulan'=>$sekarang[1],'tahun'=>$sekarang[2]]);
                 }
                 return view('profile',['profile'=>$profile,'user'=>$user,'hari'=>$hari,'bulan'=>$sekarang[1],'tahun'=>$sekarang[2]]);
@@ -53,13 +53,13 @@ class StudentController extends Controller
     {
         $id = Auth::id();
         $user = teacher::where('user_id',$id)->first();
-        
+
         // eloquent
         // $user = User::find($id)->teachers;
 
         $class = explode(',',$user->teach);
         return view('class',['class'=>$class]);
-    
+
     }
 
     public function details_kelas(Request $request,classes $classes)
@@ -122,7 +122,7 @@ class StudentController extends Controller
             if (in_array($course->id,$mapel) and in_array($profile->kelas,$kelas)){
                 $tch = $guru;
             }
-            
+
         }
 
         return view('tugas_mapel',['tugas'=>$tugas,'nama'=>$user->name,'teacher'=>$tch]);
@@ -157,7 +157,7 @@ class StudentController extends Controller
         $upload_to = 'file';
         $tgl = explode('/',$request->tanggal);
         $solve = $tgl[2].'-'.$tgl[0].'-'.$tgl[1];
-      
+
 		$file->move($upload_to,$nama_file);
 
         task::create([
@@ -169,12 +169,12 @@ class StudentController extends Controller
         ]);
         return response()->json(['success'=>'Article added successfully']);
         // return redirect()->back()->with('status', 'your message,here');
-            
+
     }
     public function answer_task(Request $request)
     {
         $id = Auth::id();
-        $user = User::where('id',$id)->first(); 
+        $user = User::where('id',$id)->first();
         $this->validate($request,[
             'tugas'=>'required',
             'file'=> 'file|mimes:pdf,png,jpeg',
@@ -193,7 +193,7 @@ class StudentController extends Controller
 
         ]);
         return redirect()->back()->with('status', 'your message,here');
-          
+
 
     }
     public function lihat_tugas(Request $request,task $task)
@@ -203,23 +203,23 @@ class StudentController extends Controller
     }
     public function download(Request $request,$file,$def)
     {
-        
+
         $solve = explode('.',$file);
-        
+
     if ($file == ''){
 
-        return redirect()->back()->with('status','no such file for this task');           
+        return redirect()->back()->with('status','no such file for this task');
 }
 else {
     if ($def == 'ans') {
         $file= public_path(). "/answer".'/'.$file;
-        
+
     }
     elseif ($def == 'task') {
         $file= public_path(). "/file".'/'.$file;
-        
+
     }
-    
+
     switch ($solve[count($solve)-1]) {
         case "jpeg" or "jpg":
             $headers = array('Content-Type: image/jpeg');
@@ -236,20 +236,20 @@ else {
         case "docx":
             $headers = array('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
             break;
-      } 
-   
+      }
+
     return Response::download($file, 'file'.'.'.$solve[count($solve)-1], $headers);
     }
 }
 
 public function create_student(Request $request)
 {
-    // dd($request->kelas );
+
         $id = Auth::id();
         student::create([
             'user_id'=>$id,
             'nama'=>$request->nama,
-             'kelas'=>$request->kelas
+            'kelas'=>$request->kelas
         ]);
 
         return redirect('home')->with('status','no such file for this task');
@@ -259,14 +259,14 @@ public function coba(Request $request)
 {
     $phone = teacher::find(1)->user;
     dd($phone);
-    
+
 }
 public function download_zip($def)
 
 {
     unlink(public_path().'/'.'file.zip');
     fopen(public_path().'/'.'file.zip', "x");
-    
+
     $solve = [];
     foreach (answer_task::where('tugas_id',$def)->get() as $isi ) {
         $solve[] = $isi->file;
@@ -307,6 +307,6 @@ public function absent(Request $request)
     // dd($user);
     absen::create(['user_id'=>$user,'tanggal'=>$date]);
     return redirect()->back()->with('success','you has been absen');
-} 
+}
 
-}   
+}

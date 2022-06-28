@@ -25,23 +25,17 @@ class check_student_register
             $user = User::where('id',$id)->first();
             if (is_null($user)){
                 throw new Exception("Error Processing Request", 1);
-                
             }
-        
 
-        
         if (is_null(admin::where('user_id',$id)->first())) {
-                
-
-
-        if (is_null(teacher::where('user_id',$id)->first())) {
-                
-            if(is_null(Student::where('user_id',$id)->first())){
-                return redirect('/register_student');
-            }
+            if (is_null(teacher::where('user_id',$id)->first())) {
+                if(is_null(Student::where('user_id',$id)->first())){
+                    return $next($request);
+                    return redirect('/register_student');
+                }
             else{
                 return $next($request);
-    
+
             }
         }
         else{
@@ -53,8 +47,9 @@ class check_student_register
         return $next($request);
 
     }
-        
+
         }catch(Exception $e){
+            dd($e);
             return redirect('/login');
         }
     }
